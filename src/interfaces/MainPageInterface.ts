@@ -12,6 +12,7 @@ interface IResponce {
   owner: {
     login: string;
   };
+  description: string;
 }
 
 export interface IProps {

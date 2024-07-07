@@ -1,6 +1,8 @@
 .block {
   display: flex;
+  justify-content: start;
   gap: 10px;
+  width: 100%;
 }
 
 .searchBlock,

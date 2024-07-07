@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { IMainPage, IProps } from '../interfaces/MainPageInterface';
 import styles from './MainPage.module.css';
+import { ClickComponent } from '../components/ErrorButton';
 
 class MainPage extends Component<IProps, IMainPage> {
   constructor(props: IProps) {
@@ -38,14 +39,8 @@ class MainPage extends Component<IProps, IMainPage> {
     }
   };
 
-  triggerError = () => {
-    throw new Error('This is a test error');
-  };
-
   componentDidMount() {
-    if (this.state.query) {
       this.handleSearch();
-    }
   }
 
   render() {
@@ -54,7 +49,7 @@ class MainPage extends Component<IProps, IMainPage> {
         <div className={styles.searchBlock}>
           <input type="text" value={this.state.query} onChange={this.handleInputChange} />
           <button onClick={this.handleSearch}>Search</button>
-          <button onClick={this.triggerError}>Trigger Error</button>
+          <ClickComponent />
         </div>
         <main className={styles.mainBlock}>
           {this.state.isLoading && <p>Loading...</p>}
@@ -63,6 +58,7 @@ class MainPage extends Component<IProps, IMainPage> {
             <div className={styles.block} key={res.id}>
               <p>Repository name: {res.full_name}</p>
               <p>Owner: {res.owner.login}</p>
+              {res.description && <p>Description: {res.description}</p>}
             </div>
           ))}
         </main>
