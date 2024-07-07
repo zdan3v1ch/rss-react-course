@@ -1,0 +1,18 @@
+.block {
+  display: flex;
+  gap: 10px;
+}
+
+.searchBlock,
+.mainBlock {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchBlock {
+  flex-direction: row;
+  gap: 10px;
+}
