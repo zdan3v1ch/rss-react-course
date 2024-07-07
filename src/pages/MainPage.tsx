@@ -40,7 +40,7 @@ class MainPage extends Component<IProps, IMainPage> {
   };
 
   componentDidMount() {
-      this.handleSearch();
+    this.handleSearch();
   }
 
   render() {
