@@ -1,11 +1,11 @@
 export interface IMainPage {
   query: string;
-  data: IResponce[];
+  data: IResponse[];
   isLoading: boolean;
   error: string | null;
 }
 
-interface IResponce {
+export interface IResponse {
   id: number;
   name: string;
   full_name: string;

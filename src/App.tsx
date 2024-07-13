@@ -1,13 +1,11 @@
 import React from 'react';
-import MainPage from './pages/MainPage';
-import ErrorBoundary from './components/ErrorBoundary';
+import { MainPageFunc } from './pages/MainPage';
+import ErrorBoundary from './components/errorBoundary/ErrorBoundary';
 
-const App: React.FC = () => {
+export function App(): React.ReactNode {
   return (
     <ErrorBoundary>
-      <MainPage />
+      <MainPageFunc />
     </ErrorBoundary>
   );
-};
-
-export default App;
+}
