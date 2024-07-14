@@ -2,7 +2,7 @@ import React, { ErrorInfo } from 'react';
 import { IProps } from '../../interfaces/MainPageInterface';
 import { IErrorBoundary } from '../../interfaces/ErrorBoundary';
 
-class ErrorBoundary extends React.Component<IProps, IErrorBoundary> {
+export class ErrorBoundary extends React.Component<IProps, IErrorBoundary> {
   constructor(props: IProps) {
     super(props);
     this.state = { hasError: false };
@@ -25,4 +25,3 @@ class ErrorBoundary extends React.Component<IProps, IErrorBoundary> {
   }
 }
 
-export default ErrorBoundary;

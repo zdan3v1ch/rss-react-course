@@ -8,5 +8,4 @@ export interface ISearchButton {
 }
 
 export interface ISearchFunction extends ISearchButton {
-  setSearchQuery: (query: string) => void;
 }

@@ -1,11 +1,11 @@
 import React from 'react';
-import { MainPageFunc } from './pages/MainPage';
-import ErrorBoundary from './components/errorBoundary/ErrorBoundary';
+import { ErrorBoundary } from './components/errorBoundary/ErrorBoundary';
+import { MyRouter } from './features/router/Router';
 
 export function App(): React.ReactNode {
   return (
     <ErrorBoundary>
-      <MainPageFunc />
+      <MyRouter />
     </ErrorBoundary>
   );
 }

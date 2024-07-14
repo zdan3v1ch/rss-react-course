@@ -1,32 +1,28 @@
 import { useEffect, useState } from 'react';
-import { IResponse } from '../interfaces/MainPageInterface';
+import { IResponse } from '../../interfaces/MainPageInterface';
 import styles from './MainPage.module.css';
-import { ClickComponentFunc } from '../components/errorBoundary/ErrorButton';
-import SearchButton from '../components/searchButton/SearchButton';
-import SearchInput from '../components/searchInput/SearchInput';
-import { useSearchQuery } from '../hooks/useSearchQuery';
-import { handleSearch } from '../components/handleSearch/handleSearch';
+import { useSearchQuery } from '../../hooks/useSearchQuery';
+import { handleSearch } from '../../features/handleSearch/handleSearch';
+import SearchComponent from '../../components/searchComponent/SearchComponent';
 
 export function MainPageFunc() {
-  const { setSearchQuery, getSearchQuery } = useSearchQuery();
+  const { getSearchQuery } = useSearchQuery();
   const [dataResult, setDataResult] = useState<IResponse[]>([]);
   const [inputData, setInputData] = useState(getSearchQuery());
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    handleSearch({ inputData, setDataResult, setLoading, setSearchQuery });
-  }, []);
+    handleSearch({ inputData, setDataResult, setLoading });
+  }, [inputData]);
 
   return (
     <div>
       <div className={styles.searchBlock}>
-        <SearchInput inputData={inputData} setInputData={setInputData} />
-        <SearchButton inputData={inputData} setDataResult={setDataResult} setLoading={setLoading} />
-        <ClickComponentFunc />
+        <SearchComponent setDataResult={setDataResult} setLoading={setLoading} setInputData = {setInputData} />
       </div>
       <main className={styles.mainBlock}>
         {loading && <p>Loading...</p>}
-        {dataResult.map((res) => (
+        {!loading && dataResult.map((res) => (
           <div className={styles.block} key={res.id}>
             <p>Repository name: {res.full_name}</p>
             <p>Owner: {res.owner.login}</p>
