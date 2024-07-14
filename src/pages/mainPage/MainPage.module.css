@@ -1,0 +1,48 @@
+.block {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  min-width: 350px;
+  flex-direction: column;
+  border: 2px solid;
+  align-items: center;
+  padding: 10px;
+}
+
+.searchBlock,
+.mainBlock {
+  padding: 20px;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.searchBlock {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.leftSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.rightSection {
+  flex: 1;
+}
+
+.fullSection {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
