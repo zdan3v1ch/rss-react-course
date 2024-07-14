@@ -40,8 +40,9 @@ export const RepoDetails: React.FC<IRepoDetailsProps> = ({ onClose, repoId, curr
   return (
     <div className={styles.block}>
       <button onClick={handleClose}>Close</button>
+      <p>Repository id: {repo.id}</p>
       <p>Repository name: {repo.full_name}</p>
-      <p>Owner: {repo.owner.login}</p>
+      <p>Forks count: {repo.owner.login}</p>
       {repo.description && <p>Description: {repo.description}</p>}
     </div>
   );

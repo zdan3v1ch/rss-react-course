@@ -7,6 +7,7 @@ import SearchComponent from '../../components/searchComponent/SearchComponent';
 import { useParams, useSearchParams } from 'react-router-dom';
 import Pagination from '../../components/pagination/Pagination';
 import { RepoDetails } from '../../components/repoDetails/RepoDetails';
+import { MainBlock } from '../../components/mainBlock/MainBlock';
 
 export function MainPageFunc() {
   const { getSearchQuery } = useSearchQuery();
@@ -49,25 +50,15 @@ export function MainPageFunc() {
           setSearchParams={setSearchParams}
         />
       </div>
-      <main className={styles.mainBlock}>
-        <div className={selectedItem ? styles.leftSection : styles.fullSection} onClick={closeDetails}>
-          {loading && <p>Loading...</p>}
-          {!loading &&
-            dataResult.map((res) => (
-              <div className={styles.block} key={res.id} onClick={() => handleItemClick(res)}>
-                <p>Repository name: {res.full_name}</p>
-                <p>Owner: {res.owner.login}</p>
-              </div>
-            ))}
-          {dataResult.length === 0 && !loading && <p>No results</p>}
-        </div>
-        {selectedItem && (
-          <div className={styles.rightSection}>
-            <RepoDetails onClose={closeDetails} repoId={clickId} currentPage={currentPage} />
-          </div>
-        )}
-      </main>
-      <Pagination currentPage={currentPage} limit={limit} onClose={closeDetails} />
+      <MainBlock
+        dataResult={dataResult}
+        loading={loading}
+        onItemClick={handleItemClick}
+        selectedItem={selectedItem}
+        onCloseDetails={closeDetails}
+        repoDetailsComponent={<RepoDetails onClose={closeDetails} repoId={clickId} currentPage={currentPage} />}
+      />
+      {!loading && <Pagination currentPage={currentPage} limit={limit} onClose={closeDetails} />}
     </div>
   );
 }
