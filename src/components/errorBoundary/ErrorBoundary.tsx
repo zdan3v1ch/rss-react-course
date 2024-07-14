@@ -24,4 +24,3 @@ export class ErrorBoundary extends React.Component<IProps, IErrorBoundary> {
     return this.props.children;
   }
 }
-

@@ -18,17 +18,18 @@ export function MainPageFunc() {
   return (
     <div>
       <div className={styles.searchBlock}>
-        <SearchComponent setDataResult={setDataResult} setLoading={setLoading} setInputData = {setInputData} />
+        <SearchComponent setDataResult={setDataResult} setLoading={setLoading} setInputData={setInputData} />
       </div>
       <main className={styles.mainBlock}>
         {loading && <p>Loading...</p>}
-        {!loading && dataResult.map((res) => (
-          <div className={styles.block} key={res.id}>
-            <p>Repository name: {res.full_name}</p>
-            <p>Owner: {res.owner.login}</p>
-            {res.description && <p>Description: {res.description}</p>}
-          </div>
-        ))}
+        {!loading &&
+          dataResult.map((res) => (
+            <div className={styles.block} key={res.id}>
+              <p>Repository name: {res.full_name}</p>
+              <p>Owner: {res.owner.login}</p>
+              {res.description && <p>Description: {res.description}</p>}
+            </div>
+          ))}
         {dataResult.length === 0 && !loading && <p>No results</p>}
       </main>
     </div>

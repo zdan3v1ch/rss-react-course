@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ISearchInput } from '../../interfaces/SearchInputInterface';
 
 const SearchInput: React.FC<ISearchInput> = () => {
-  const [inputData, setInputData ] = useState('');
+  const [inputData, setInputData] = useState('');
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputData(event.target.value);
   };
