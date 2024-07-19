@@ -3,33 +3,26 @@ import { useNavigate } from 'react-router-dom';
 import { IResponse } from '../../interfaces/MainPageInterface';
 import styles from '../../pages/mainPage/MainPage.module.css';
 import { IRepoDetailsProps } from '../../interfaces/RepoDetailsInterface';
+import { useGetPeopleByIDQuery } from '../../features/rtkQuery/apiSlice';
 
 export const RepoDetails: React.FC<IRepoDetailsProps> = ({ onClose, repoId, currentPage }) => {
   const [repo, setRepo] = useState<IResponse | null>(null);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { data, error, isLoading } = useGetPeopleByIDQuery(repoId);
 
+  console.log(data, error, isLoading);
   useEffect(() => {
-    const fetchRepoDetails = async () => {
-      try {
-        const response = await fetch(`https://api.github.com/repositories/${repoId}`);
-        const data = await response.json();
-        setRepo(data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Failed to fetch repo details', error);
-        setLoading(false);
-      }
-    };
-    fetchRepoDetails();
-  }, [repoId]);
+    if (data) {
+      setRepo(data);
+    }
+  }, [data]);
 
   const handleClose = () => {
     onClose();
-    navigate(`/search/${currentPage}`);
+    navigate(`/page/${currentPage}`);
   };
 
-  if (loading) {
+  if (isLoading) {
     return <p>Loading...</p>;
   }
 
@@ -40,10 +33,11 @@ export const RepoDetails: React.FC<IRepoDetailsProps> = ({ onClose, repoId, curr
   return (
     <div className={styles.block}>
       <button onClick={handleClose}>Close</button>
-      <p>Repository id: {repo.id}</p>
-      <p>Repository name: {repo.full_name}</p>
-      <p>Forks count: {repo.owner.login}</p>
-      {repo.description && <p>Description: {repo.description}</p>}
+      <p>Name: {repo.name}</p>
+      <p>Eye color: {repo.eye_color}</p>
+      <p>Gender: {repo.gender}</p>
+      <p>Height: {repo.height}</p>
+      <p>Skin color: {repo.skin_color}</p>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 export interface IRepoDetailsProps {
   onClose: () => void;
-  repoId: number;
-  currentPage: number;
+  repoId: string;
+  currentPage: string;
 }

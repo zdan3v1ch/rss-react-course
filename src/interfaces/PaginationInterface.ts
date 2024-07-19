@@ -1,5 +1,5 @@
 export interface IPagination {
-  currentPage: number;
+  currentPage: string;
   limit: number;
   onClose: () => void;
 }

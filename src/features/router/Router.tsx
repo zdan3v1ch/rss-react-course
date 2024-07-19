@@ -7,7 +7,7 @@ export const MyRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPageFunc />} />
-        <Route path="/search/:page" element={<MainPageFunc />}></Route>
+        <Route path="/page/:page" element={<MainPageFunc />}></Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
