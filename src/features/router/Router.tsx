@@ -1,15 +1,17 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { MainPageFunc } from '../../pages/mainPage/MainPage';
 import ErrorPage from '../../pages/errorPage/ErrorPage';
+import { Provider } from 'react-redux';
+import { store } from '../../redux/store';
 
-export const MyRouter = () => {
+export const MyRoutes = () => {
   return (
-    <BrowserRouter>
+    <Provider store={store}>
       <Routes>
         <Route path="/" element={<MainPageFunc />} />
-        <Route path="/page/:page" element={<MainPageFunc />}></Route>
+        <Route path="/page/:page" element={<MainPageFunc />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
-    </BrowserRouter>
+    </Provider>
   );
 };

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">80.95% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>21/21</span>
+                <span class='fraction'>17/21</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>1/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">80.95% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>21/21</span>
+                <span class='fraction'>17/21</span>
             </div>
         
             
@@ -94,55 +94,55 @@
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useNavigate, useSearchParams } from 'react-router-dom';
 import styles from './Pagination.module.css';
 import { IPagination } from '../../interfaces/PaginationInterface';
 &nbsp;
 const Pagination: React.FC&lt;IPagination&gt; = ({ currentPage, limit, onClose }) =&gt; {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const pageToNumber = Number(currentPage);
 &nbsp;
-  const handlePageChange = (page: number) =&gt; {
-    searchParams.set('page', page.toString());
-    navigate(`/search/${page}`);
-    onClose();
-  };
+  const handlePageChange = <span class="fstat-no" title="function not covered" >(page: number) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    searchParams.set('page', page.toString());</span>
+<span class="cstat-no" title="statement not covered" >    navigate(`/page/${page}`);</span>
+<span class="cstat-no" title="statement not covered" >    onClose();</span>
+<span class="cstat-no" title="statement not covered" >  };</span>
 &nbsp;
   return (
     &lt;div className={styles.pagination}&gt;
-      &lt;button disabled={currentPage === 1} onClick={<span class="fstat-no" title="function not covered" >() =&gt; handlePageChange(currentPage - 1)}&gt;</span>
+      &lt;button disabled={pageToNumber === 1} onClick={<span class="fstat-no" title="function not covered" >() =&gt; handlePageChange(pageToNumber - 1)}&gt;</span>
         Previous
       &lt;/button&gt;
-      &lt;span&gt;Page {currentPage}&lt;/span&gt;
-      &lt;button disabled={currentPage === limit} onClick={() =&gt; handlePageChange(currentPage + 1)}&gt;
+      &lt;span&gt;Page {pageToNumber}&lt;/span&gt;
+      &lt;button disabled={pageToNumber === limit || limit === 0} onClick={<span class="fstat-no" title="function not covered" >() =&gt; handlePageChange(pageToNumber + 1)}&gt;</span>
         Next
       &lt;/button&gt;
     &lt;/div&gt;
@@ -157,7 +157,7 @@ export default Pagination;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-14T23:44:59.167Z
+                at 2024-07-25T12:25:41.682Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

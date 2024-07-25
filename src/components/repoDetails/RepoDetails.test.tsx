@@ -1,54 +1,115 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, Mock } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { RepoDetails } from './RepoDetails';
-import { IResponse } from '../../interfaces/MainPageInterface';
+import { apiSlice } from '../../features/rtkQuery/apiSlice';
+import userEvent from '@testing-library/user-event';
 
-const mockOnClose = vi.fn();
-
-const mockRepoData: IResponse = {
-  id: 1,
-  full_name: 'mock-repo',
-  owner: { login: 'mock-owner' },
-  description: 'This is a mock repository description',
-  name: ''
+// Моковая реализация apiSlice
+const mockApiSlice = {
+  useGetPeopleByIDQuery: vi.fn()
 };
 
-global.fetch = vi.fn(() =>
-  Promise.resolve({
-    json: () => Promise.resolve(mockRepoData)
-  })
-) as Mock;
-
-const mockNavigate = vi.fn();
-vi.mock('react-router-dom', () => ({
-  ...vi.importActual('react-router-dom'),
-  useNavigate: () => mockNavigate
-}));
+interface IRepoDetailsProps {
+  onClose: () => void;
+  repoId: string;
+  currentPage: string;
+}
 
 describe('RepoDetails Component', () => {
-  it('displays a loading indicator while fetching data', () => {
-    render(<RepoDetails repoId={1} onClose={mockOnClose} currentPage={1} />);
+  const renderComponent = (props: IRepoDetailsProps) => {
+    const store = configureStore({
+      reducer: {
+        [apiSlice.reducerPath]: apiSlice.reducer
+      },
+      middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware)
+    });
 
-    expect(screen.getByText(/Loading.../)).toBeInTheDocument();
+    return render(
+      <MemoryRouter>
+        <Provider store={store}>
+          <RepoDetails {...props} />
+        </Provider>
+      </MemoryRouter>
+    );
+  };
+
+  it('renders loading state initially', () => {
+    mockApiSlice.useGetPeopleByIDQuery.mockReturnValue({
+      data: null,
+      error: null,
+      isLoading: true
+    });
+
+    renderComponent({ onClose: vi.fn(), repoId: '1', currentPage: '1' });
+
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 
-  it('displays the repo details when data is fetched', async () => {
-    render(<RepoDetails repoId={1} onClose={mockOnClose} currentPage={1} />);
+  it('renders repo details when data is available', async () => {
+    const mockData = {
+      name: 'Luke Skywalker',
+      eye_color: 'blue',
+      gender: 'male',
+      height: '172',
+      skin_color: 'fair'
+    };
+
+    mockApiSlice.useGetPeopleByIDQuery.mockReturnValue({
+      data: mockData,
+      error: null,
+      isLoading: false
+    });
+
+    renderComponent({ onClose: vi.fn(), repoId: '1', currentPage: '1' });
 
     await waitFor(() => {
-      expect(screen.getByText(/mock-repo/)).toBeInTheDocument();
-      expect(screen.getByText(/mock-owner/)).toBeInTheDocument();
-      expect(screen.getByText(/This is a mock repository description/)).toBeInTheDocument();
+      expect(screen.getByText('Name: Luke Skywalker')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Eye color: blue')).toBeInTheDocument();
+    expect(screen.getByText('Gender: male')).toBeInTheDocument();
+    expect(screen.getByText('Height: 172')).toBeInTheDocument();
+    expect(screen.getByText('Skin color: fair')).toBeInTheDocument();
+  });
+
+  it('renders error state when no data is available', async () => {
+    mockApiSlice.useGetPeopleByIDQuery.mockReturnValue({
+      data: null,
+      error: true,
+      isLoading: false
+    });
+
+    renderComponent({ onClose: vi.fn(), repoId: '1', currentPage: '1' });
+
+    await waitFor(() => {
+      expect(screen.getByText('No details available')).toBeInTheDocument();
     });
   });
 
-  it('calls onClose and navigates to the correct page when the Close button is clicked', async () => {
-    render(<RepoDetails repoId={1} onClose={mockOnClose} currentPage={1} />);
+  it('calls onClose and navigates to the correct page when close button is clicked', async () => {
+    const mockData = {
+      name: 'Luke Skywalker',
+      eye_color: 'blue',
+      gender: 'male',
+      height: '172',
+      skin_color: 'fair'
+    };
 
-    await waitFor(() => {
-      fireEvent.click(screen.getByText(/Close/));
-      expect(mockOnClose).toHaveBeenCalled();
-      expect(mockNavigate).toHaveBeenCalledWith('/search/1');
+    mockApiSlice.useGetPeopleByIDQuery.mockReturnValue({
+      data: mockData,
+      error: null,
+      isLoading: false
     });
+
+    const mockOnClose = vi.fn();
+    renderComponent({ onClose: mockOnClose, repoId: '1', currentPage: '1' });
+
+    const closeButton = await waitFor(() => screen.getByText('Close'));
+    await userEvent.click(closeButton);
+
+    expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 });

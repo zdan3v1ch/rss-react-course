@@ -5,18 +5,24 @@ import { MainBlock } from './MainBlock';
 
 const mockData: IResponse[] = [
   {
-    id: 1,
-    full_name: 'repo1',
-    owner: { login: 'owner1' },
-    description: 'desc1',
-    name: ''
+    name: 'Luke Skywalker',
+    height: '172',
+    mass: '77',
+    skin_color: 'fair',
+    eye_color: 'blue',
+    birth_year: '19BBY',
+    gender: 'male',
+    url: 'https://swapi.dev/api/people/1/'
   },
   {
-    id: 2,
-    full_name: 'repo2',
-    owner: { login: 'owner2' },
-    description: 'desc2',
-    name: ''
+    name: 'C-3PO',
+    height: '167',
+    mass: '75',
+    skin_color: 'gold',
+    eye_color: 'yellow',
+    birth_year: '112BBY',
+    gender: 'n/a',
+    url: 'https://swapi.dev/api/people/2/'
   }
 ];
 
@@ -36,7 +42,7 @@ describe('MainBlock Component', () => {
       />
     );
 
-    const repositoryItems = screen.getAllByText(/Repository name:/);
+    const repositoryItems = screen.getAllByText(/Character name: /);
     expect(repositoryItems).toHaveLength(mockData.length);
   });
 

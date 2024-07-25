@@ -1,15 +1,17 @@
 import React from 'react';
 import { ErrorBoundary } from './components/errorBoundary/ErrorBoundary';
-import { MyRouter } from './features/router/Router';
-import { Provider } from 'react-redux';
-import { store } from './redux/store';
+import { MyRoutes } from './features/router/Router';
+import { ThemeProvider } from './contextApi/Context';
+import { BrowserRouter } from 'react-router-dom';
 
 export function App(): React.ReactNode {
   return (
-    <ErrorBoundary>
-      <Provider store={store}>
-        <MyRouter />
-      </Provider>
-    </ErrorBoundary>
+    <BrowserRouter>
+      <ErrorBoundary>
+        <ThemeProvider>
+          <MyRoutes />
+        </ThemeProvider>
+      </ErrorBoundary>
+    </BrowserRouter>
   );
 }
