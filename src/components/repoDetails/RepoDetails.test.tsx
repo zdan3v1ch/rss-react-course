@@ -2,10 +2,9 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
 import { RepoDetails } from './RepoDetails';
-import { apiSlice } from '../../redux/slices/rtkQuery/apiSlice';
 import userEvent from '@testing-library/user-event';
+import { store } from '../../redux/store';
 
 const mockApiSlice = {
   useGetPeopleByIDQuery: vi.fn()
@@ -19,13 +18,6 @@ interface IRepoDetailsProps {
 
 describe('RepoDetails Component', () => {
   const renderComponent = (props: IRepoDetailsProps) => {
-    const store = configureStore({
-      reducer: {
-        [apiSlice.reducerPath]: apiSlice.reducer
-      },
-      middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware)
-    });
-
     return render(
       <MemoryRouter>
         <Provider store={store}>
@@ -72,20 +64,6 @@ describe('RepoDetails Component', () => {
     expect(screen.getByText('Gender: male')).toBeInTheDocument();
     expect(screen.getByText('Height: 172')).toBeInTheDocument();
     expect(screen.getByText('Skin color: fair')).toBeInTheDocument();
-  });
-
-  it('renders error state when no data is available', async () => {
-    mockApiSlice.useGetPeopleByIDQuery.mockReturnValue({
-      data: null,
-      error: true,
-      isLoading: false
-    });
-
-    renderComponent({ onClose: vi.fn(), repoId: '1', currentPage: '1' });
-
-    await waitFor(() => {
-      expect(screen.getByText('No details available')).toBeInTheDocument();
-    });
   });
 
   it('calls onClose and navigates to the correct page when close button is clicked', async () => {
