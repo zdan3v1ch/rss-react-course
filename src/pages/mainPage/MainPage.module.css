@@ -1,0 +1,59 @@
+.block {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  min-width: 350px;
+  flex-direction: column;
+  border: 2px solid;
+  align-items: center;
+  padding: 10px;
+}
+
+.block p {
+  margin: 0;
+}
+
+.searchBlock,
+.mainBlock {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.loadingBlock {
+  display: flex;
+  justify-content: center;
+}
+
+.searchBlock {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.leftSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.rightSection {
+  flex: 1;
+}
+
+.fullSection {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mainComponent {
+  width: 100%;
+  min-height: 100vh;
+}
