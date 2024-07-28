@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>34/34</span>
+                <span class='fraction'>33/33</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>34/34</span>
+                <span class='fraction'>33/33</span>
             </div>
         
             
@@ -114,54 +114,54 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IResponse } from '../../interfaces/MainPageInterface';
 import styles from '../../pages/mainPage/MainPage.module.css';
 import { IRepoDetailsProps } from '../../interfaces/RepoDetailsInterface';
-import { useGetPeopleByIDQuery } from '../../features/rtkQuery/apiSlice';
+import { useGetPeopleByIDQuery } from '../../redux/slices/rtkQuery/apiSlice';
 &nbsp;
 export const RepoDetails: React.FC&lt;IRepoDetailsProps&gt; = ({ onClose, repoId, currentPage }) =&gt; {
   const [repo, setRepo] = useState&lt;IResponse | null&gt;(null);
   const navigate = useNavigate();
-  const { data, error, isLoading } = useGetPeopleByIDQuery(repoId);
+  const { data, isLoading } = useGetPeopleByIDQuery(repoId);
 &nbsp;
-  console.log(data, error, isLoading);
+&nbsp;
   useEffect(() =&gt; {
     if (data) {
       setRepo(data);
@@ -174,7 +174,7 @@ export const RepoDetails: React.FC&lt;IRepoDetailsProps&gt; = ({ onClose, repoId
   };
 &nbsp;
   if (isLoading) {
-    return &lt;p&gt;Loading...&lt;/p&gt;;
+    return &lt;p className={styles.loadingBlock}&gt;Loading...&lt;/p&gt;;
   }
 &nbsp;
   if (!repo) {
@@ -199,7 +199,7 @@ export const RepoDetails: React.FC&lt;IRepoDetailsProps&gt; = ({ onClose, repoId
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-25T12:25:41.682Z
+                at 2024-07-28T22:28:21.805Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

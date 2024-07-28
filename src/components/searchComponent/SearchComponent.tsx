@@ -11,15 +11,13 @@ const SearchComponent: React.FC<ISearchComponent> = ({ setInputData, currentPage
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { toggleTheme } = useContext(ThemeContext);
   return (
     <>
       <input type="text" placeholder="Search..." value={inputValue} onChange={handleInputChange} />
       <SearchButton inputData={inputValue} currentPage={currentPage} setInputData={setInputData} />
       <ClickComponentFunc />
-      <button className={theme} onClick={toggleTheme}>
-        Change theme
-      </button>
+      <button onClick={toggleTheme}>Change theme</button>
     </>
   );
 };

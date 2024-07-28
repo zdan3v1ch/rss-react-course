@@ -3,14 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { IResponse } from '../../interfaces/MainPageInterface';
 import styles from '../../pages/mainPage/MainPage.module.css';
 import { IRepoDetailsProps } from '../../interfaces/RepoDetailsInterface';
-import { useGetPeopleByIDQuery } from '../../features/rtkQuery/apiSlice';
+import { useGetPeopleByIDQuery } from '../../redux/slices/rtkQuery/apiSlice';
 
 export const RepoDetails: React.FC<IRepoDetailsProps> = ({ onClose, repoId, currentPage }) => {
   const [repo, setRepo] = useState<IResponse | null>(null);
   const navigate = useNavigate();
-  const { data, error, isLoading } = useGetPeopleByIDQuery(repoId);
+  const { data, isLoading } = useGetPeopleByIDQuery(repoId);
 
-  console.log(data, error, isLoading);
   useEffect(() => {
     if (data) {
       setRepo(data);
@@ -23,7 +22,7 @@ export const RepoDetails: React.FC<IRepoDetailsProps> = ({ onClose, repoId, curr
   };
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p className={styles.loadingBlock}>Loading...</p>;
   }
 
   if (!repo) {

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IData, IResponse } from '../../interfaces/MainPageInterface';
+import { IData, IResponse } from '../../../interfaces/MainPageInterface';
 
 export const apiSlice = createApi({
   reducerPath: 'api',

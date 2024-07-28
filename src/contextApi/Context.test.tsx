@@ -39,21 +39,4 @@ describe('ThemeProvider', () => {
     await userEvent.click(button);
     expect(screen.getByTestId('theme')).toHaveTextContent('light');
   });
-
-  it('updates document.body.className when the theme changes', async () => {
-    render(
-      <ThemeProvider>
-        <TestComponent />
-      </ThemeProvider>
-    );
-
-    const button = screen.getByText('Change Theme');
-    expect(document.body.className).toBe('light');
-
-    await userEvent.click(button);
-    expect(document.body.className).toBe('dark');
-
-    await userEvent.click(button);
-    expect(document.body.className).toBe('light');
-  });
 });

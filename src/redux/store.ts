@@ -1,10 +1,17 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import { apiSlice } from '../features/rtkQuery/apiSlice';
+import { apiSlice } from './slices/rtkQuery/apiSlice';
+import selectedItemsSlice from './slices/selectSlice';
+
+const rootReducer = combineReducers({
+  selectedItems: selectedItemsSlice,
+  [apiSlice.reducerPath]: apiSlice.reducer
+});
 
 export const store = configureStore({
-  reducer: {
-    [apiSlice.reducerPath]: apiSlice.reducer
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware)
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

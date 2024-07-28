@@ -14,7 +14,7 @@ export const MainBlock: React.FC<IMainBlockProps> = ({
   return (
     <main className={styles.mainBlock}>
       <div className={selectedItem ? styles.leftSection : styles.fullSection} onClick={onCloseDetails}>
-        {loading && <p>Loading...</p>}
+        {loading && <p className={styles.loadingBlock}>Loading...</p>}
         {!loading && dataResult.map((res) => <Block key={res.url} data={res} onClick={() => onItemClick(res)} />)}
         {dataResult.length === 0 && !loading && <p>No results</p>}
       </div>

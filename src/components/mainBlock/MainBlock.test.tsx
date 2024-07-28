@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { IResponse } from '../../interfaces/MainPageInterface';
 import { MainBlock } from './MainBlock';
+import { Provider } from 'react-redux';
+import { store } from '../../redux/store';
 
 const mockData: IResponse[] = [
   {
@@ -32,14 +34,16 @@ describe('MainBlock Component', () => {
     const mockOnCloseDetails = vi.fn();
 
     render(
-      <MainBlock
-        dataResult={mockData}
-        loading={false}
-        onItemClick={mockOnItemClick}
-        selectedItem={false}
-        onCloseDetails={mockOnCloseDetails}
-        repoDetailsComponent={null}
-      />
+      <Provider store={store}>
+        <MainBlock
+          dataResult={mockData}
+          loading={false}
+          onItemClick={mockOnItemClick}
+          selectedItem={false}
+          onCloseDetails={mockOnCloseDetails}
+          repoDetailsComponent={null}
+        />
+      </Provider>
     );
 
     const repositoryItems = screen.getAllByText(/Character name: /);

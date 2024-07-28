@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { IResponse } from '../../interfaces/MainPageInterface';
 import styles from './MainPage.module.css';
 import { useSearchQuery } from '../../hooks/useSearchQuery';
-// import { handleSearch } from '../../features/handleSearch/handleSearch';
 import SearchComponent from '../../components/searchComponent/SearchComponent';
 import { useParams, useSearchParams } from 'react-router-dom';
 import Pagination from '../../components/pagination/Pagination';
 import { RepoDetails } from '../../components/repoDetails/RepoDetails';
 import { MainBlock } from '../../components/mainBlock/MainBlock';
-import { getUrlId } from '../../utils/getUrlId';
-import { useGetPeopleQuery } from '../../features/rtkQuery/apiSlice';
+import { useGetPeopleQuery } from '../../redux/slices/rtkQuery/apiSlice';
+import { ThemeContext } from '../../contextApi/Context';
+import { FlyoutBlock } from '../../components/flyoutBlock/FlyoutBlock';
 
 export function MainPageFunc() {
   const { getSearchQuery } = useSearchQuery();
@@ -20,6 +20,7 @@ export function MainPageFunc() {
   const [, setSearchParams] = useSearchParams();
   const [limit, setLimit] = useState(1);
   const [clickId, setClickId] = useState('');
+  const { theme } = useContext(ThemeContext);
   const currentPage = page ? page : '1';
 
   const { data, isLoading } = useGetPeopleQuery({ searchParam: inputData, page: currentPage });
@@ -27,14 +28,12 @@ export function MainPageFunc() {
     if (data) {
       setDataResult(data.results);
       setLimit(Math.ceil(data.count / 10));
-      console.log(data);
     }
   }, [data]);
 
   const handleItemClick = (item: IResponse) => {
     setSelectedItem(true);
     setClickId(item.url);
-    console.log(getUrlId(item.url), 'this is urlID');
   };
 
   const closeDetails = () => {
@@ -45,11 +44,11 @@ export function MainPageFunc() {
   };
 
   return (
-    <div>
+    <div className={`${theme} ${styles.mainComponent}`}>
       <div className={styles.searchBlock}>
         <SearchComponent setInputData={setInputData} currentPage={currentPage} />
       </div>
-      {isLoading && <p>Loading...</p>}
+      {isLoading && <p className={styles.loadingBlock}>Loading...</p>}
       {!isLoading && (
         <MainBlock
           dataResult={dataResult}
@@ -61,6 +60,7 @@ export function MainPageFunc() {
         />
       )}
       {!isLoading && <Pagination currentPage={currentPage} limit={limit} onClose={closeDetails} />}
+      <FlyoutBlock />
     </div>
   );
 }

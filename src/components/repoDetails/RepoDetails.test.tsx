@@ -4,14 +4,12 @@ import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { RepoDetails } from './RepoDetails';
-import { apiSlice } from '../../features/rtkQuery/apiSlice';
+import { apiSlice } from '../../redux/slices/rtkQuery/apiSlice';
 import userEvent from '@testing-library/user-event';
 
-// Моковая реализация apiSlice
 const mockApiSlice = {
   useGetPeopleByIDQuery: vi.fn()
 };
-
 interface IRepoDetailsProps {
   onClose: () => void;
   repoId: string;

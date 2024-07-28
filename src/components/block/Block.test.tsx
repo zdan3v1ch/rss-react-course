@@ -3,6 +3,8 @@ import { describe, it, expect, vi } from 'vitest';
 import { Block } from './Block';
 import { IResponse } from '../../interfaces/MainPageInterface';
 import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../redux/store';
 
 const mockData: IResponse = {
   name: 'Luke Skywalker',
@@ -19,7 +21,11 @@ const mockOnClick = vi.fn();
 
 describe('Block Component', () => {
   it('renders the block with correct data', () => {
-    render(<Block data={mockData} onClick={mockOnClick} />);
+    render(
+      <Provider store={store}>
+        <Block data={mockData} onClick={mockOnClick} />
+      </Provider>
+    );
     expect(screen.getByText(/Character name: Luke Skywalker/)).toBeInTheDocument();
     expect(screen.getByText(/Gender: male/)).toBeInTheDocument();
     expect(screen.getByText(/Height: 172/)).toBeInTheDocument();
@@ -28,9 +34,11 @@ describe('Block Component', () => {
 
   it('calls onClick when clicked', () => {
     render(
-      <MemoryRouter>
-        <Block data={mockData} onClick={mockOnClick} />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <Block data={mockData} onClick={mockOnClick} />
+        </MemoryRouter>
+      </Provider>
     );
     fireEvent.click(screen.getByText(/Character name: Luke Skywalker/));
     expect(mockOnClick).toHaveBeenCalledTimes(1);

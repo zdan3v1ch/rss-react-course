@@ -9,14 +9,22 @@
   padding: 10px;
 }
 
+.block p {
+  margin: 0;
+}
+
 .searchBlock,
 .mainBlock {
-  padding: 20px;
+  padding: 10px;
   display: flex;
-  /* align-items: center; */
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+.loadingBlock {
+  display: flex;
+  justify-content: center;
 }
 
 .searchBlock {
@@ -24,7 +32,6 @@
   align-items: center;
   gap: 10px;
 }
-
 
 .leftSection {
   flex: 1;
@@ -39,10 +46,14 @@
 
 .fullSection {
   flex: 1;
-  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+.mainComponent {
+  width: 100%;
+  min-height: 100vh;
 }
