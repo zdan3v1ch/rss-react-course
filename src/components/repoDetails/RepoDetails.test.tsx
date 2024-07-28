@@ -7,9 +7,11 @@ import { RepoDetails } from './RepoDetails';
 import { apiSlice } from '../../redux/slices/rtkQuery/apiSlice';
 import userEvent from '@testing-library/user-event';
 
+
 const mockApiSlice = {
   useGetPeopleByIDQuery: vi.fn()
 };
+
 interface IRepoDetailsProps {
   onClose: () => void;
   repoId: string;
