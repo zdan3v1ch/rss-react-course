@@ -8,7 +8,7 @@ import { getCsvFile } from '../../utils/getCsvFile';
 export const FlyoutBlock: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const selectedItems = useSelector((state: RootState) => state.selectedItems.selectedElements);
-
+  console.log(selectedItems);
   if (selectedItems.length === 0) {
     return null;
   }

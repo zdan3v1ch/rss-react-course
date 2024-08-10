@@ -1,22 +1,28 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export function useSearchQuery() {
+  const [searchQuery, setSearchQueryState] = useState<string>('');
+
   function setSearchQuery(value: string): void {
-    localStorage.setItem('searchQuery', value);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('searchQuery', value);
+      setSearchQueryState(value);
+    }
   }
 
   function getSearchQuery(): string {
-    return localStorage.getItem('searchQuery') || '';
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('searchQuery') || '';
+    }
+    return '';
   }
 
   useEffect(() => {
-    return () => {
-      const localStorageData = getSearchQuery();
-      if (localStorageData) {
-        setSearchQuery(localStorageData);
-      }
-    };
+    const localStorageData = getSearchQuery();
+    if (localStorageData) {
+      setSearchQueryState(localStorageData);
+    }
   }, []);
 
-  return { setSearchQuery, getSearchQuery };
+  return { searchQuery, setSearchQuery, getSearchQuery };
 }

@@ -1,16 +1,18 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import Pagination from './Pagination';
-import { MemoryRouter } from 'react-router-dom';
+
+vi.mock('next/router', () => ({
+  useRouter: () => ({
+    push: vi.fn()
+  })
+}));
 
 describe('Pagination Component', () => {
   const setup = (page: string, limit: number) => {
     const handleOnClose = vi.fn();
-    render(
-      <MemoryRouter>
-        <Pagination currentPage={page} limit={limit} onClose={handleOnClose} />
-      </MemoryRouter>
-    );
+    render(<Pagination currentPage={page} limit={limit} onClose={handleOnClose} />);
 
     const nextButton = screen.getByText(/Next/);
     const prevButton = screen.getByText(/Previous/);

@@ -1,3 +1,4 @@
+import React from 'react';
 import { createContext, ReactNode, useState } from 'react';
 import { IThemeContext } from '../interfaces/ThemeContextInterface';
 

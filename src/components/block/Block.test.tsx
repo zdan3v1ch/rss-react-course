@@ -1,8 +1,9 @@
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { Block } from './Block';
 import { IResponse } from '../../interfaces/MainPageInterface';
-import { MemoryRouter } from 'react-router-dom';
+// import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from '../../redux/store';
 
@@ -35,9 +36,7 @@ describe('Block Component', () => {
   it('calls onClick when clicked', () => {
     render(
       <Provider store={store}>
-        <MemoryRouter>
-          <Block data={mockData} onClick={mockOnClick} />
-        </MemoryRouter>
+        <Block data={mockData} onClick={mockOnClick} />
       </Provider>
     );
     fireEvent.click(screen.getByText(/Character name: Luke Skywalker/));

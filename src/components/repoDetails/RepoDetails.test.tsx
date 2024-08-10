@@ -1,10 +1,16 @@
+import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { RepoDetails } from './RepoDetails';
 import userEvent from '@testing-library/user-event';
 import { store } from '../../redux/store';
+
+vi.mock('next/router', () => ({
+  useRouter: () => ({
+    push: vi.fn()
+  })
+}));
 
 const mockApiSlice = {
   useGetPeopleByIDQuery: vi.fn()
@@ -19,11 +25,9 @@ interface IRepoDetailsProps {
 describe('RepoDetails Component', () => {
   const renderComponent = (props: IRepoDetailsProps) => {
     return render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <RepoDetails {...props} />
-        </Provider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <RepoDetails {...props} />
+      </Provider>
     );
   };
 

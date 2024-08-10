@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../pages/mainPage/MainPage.module.css';
+import styles from '../../pagesOnApp/mainPage/MainPage.module.css';
 import { IMainBlockProps } from '../../interfaces/MainBlockInterface';
 import { Block } from '../block/Block';
 

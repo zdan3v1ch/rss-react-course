@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { IResponse } from '../../interfaces/MainPageInterface';
-import styles from '../../pages/mainPage/MainPage.module.css';
+import styles from '../../pagesOnApp/mainPage/MainPage.module.css';
 import { IRepoDetailsProps } from '../../interfaces/RepoDetailsInterface';
 import { useGetPeopleByIDQuery } from '../../redux/slices/rtkQuery/apiSlice';
 
 export const RepoDetails: React.FC<IRepoDetailsProps> = ({ onClose, repoId, currentPage }) => {
   const [repo, setRepo] = useState<IResponse | null>(null);
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const { data, isLoading } = useGetPeopleByIDQuery(repoId);
 
   useEffect(() => {
@@ -18,7 +18,14 @@ export const RepoDetails: React.FC<IRepoDetailsProps> = ({ onClose, repoId, curr
 
   const handleClose = () => {
     onClose();
-    navigate(`/page/${currentPage}`);
+    navigate.push(
+      {
+        pathname: '/page/[page]',
+        query: { page: currentPage }
+      },
+      undefined,
+      { shallow: true }
+    );
   };
 
   if (isLoading) {

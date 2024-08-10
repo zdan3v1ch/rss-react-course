@@ -1,3 +1,4 @@
+import React from 'react';
 import { useContext, useState } from 'react';
 import { ClickComponentFunc } from '../errorBoundary/ErrorButton';
 import SearchButton from '../searchButton/SearchButton';

@@ -1,15 +1,14 @@
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import React from 'react';
 import styles from './Pagination.module.css';
 import { IPagination } from '../../interfaces/PaginationInterface';
+import { useRouter } from 'next/router';
 
 const Pagination: React.FC<IPagination> = ({ currentPage, limit, onClose }) => {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const navigate = useRouter();
   const pageToNumber = Number(currentPage);
 
   const handlePageChange = (page: number) => {
-    searchParams.set('page', page.toString());
-    navigate(`/page/${page}`);
+    navigate.push(`/page/${page}`);
     onClose();
   };
 

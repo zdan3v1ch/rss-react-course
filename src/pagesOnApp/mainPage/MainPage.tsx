@@ -3,27 +3,30 @@ import { IResponse } from '../../interfaces/MainPageInterface';
 import styles from './MainPage.module.css';
 import { useSearchQuery } from '../../hooks/useSearchQuery';
 import SearchComponent from '../../components/searchComponent/SearchComponent';
-import { useParams, useSearchParams } from 'react-router-dom';
 import Pagination from '../../components/pagination/Pagination';
 import { RepoDetails } from '../../components/repoDetails/RepoDetails';
 import { MainBlock } from '../../components/mainBlock/MainBlock';
 import { useGetPeopleQuery } from '../../redux/slices/rtkQuery/apiSlice';
 import { ThemeContext } from '../../contextApi/Context';
 import { FlyoutBlock } from '../../components/flyoutBlock/FlyoutBlock';
+import { useRouter } from 'next/router';
+import { ISSG } from '../../interfaces/ServerSideGener';
+import { getUrlId } from '../../utils/getUrlId';
 
-export function MainPageFunc() {
+export default function MainPage({ initialData, initialPage }: ISSG) {
   const { getSearchQuery } = useSearchQuery();
-  const [dataResult, setDataResult] = useState<IResponse[]>([]);
+  const [dataResult, setDataResult] = useState<IResponse[]>(initialData);
   const [inputData, setInputData] = useState(getSearchQuery());
-  const { page } = useParams<{ page: string }>();
+  const navigate = useRouter();
+  const { page } = navigate.query;
   const [selectedItem, setSelectedItem] = useState(false);
-  const [, setSearchParams] = useSearchParams();
   const [limit, setLimit] = useState(1);
   const [clickId, setClickId] = useState('');
   const { theme } = useContext(ThemeContext);
-  const currentPage = page ? page : '1';
+  const currentPage = Array.isArray(page) ? page[0] : page || initialPage;
 
   const { data, isLoading } = useGetPeopleQuery({ searchParam: inputData, page: currentPage });
+
   useEffect(() => {
     if (data) {
       setDataResult(data.results);
@@ -34,12 +37,27 @@ export function MainPageFunc() {
   const handleItemClick = (item: IResponse) => {
     setSelectedItem(true);
     setClickId(item.url);
+    navigate.push(
+      {
+        pathname: '/page/[page]',
+        query: { page: currentPage, details: getUrlId(item.url) }
+      },
+      undefined,
+      { shallow: true }
+    );
   };
 
   const closeDetails = () => {
     if (selectedItem) {
       setSelectedItem(false);
-      setSearchParams({});
+      navigate.push(
+        {
+          pathname: '/page/[page]',
+          query: { page: currentPage }
+        },
+        undefined,
+        { shallow: true }
+      );
     }
   };
 

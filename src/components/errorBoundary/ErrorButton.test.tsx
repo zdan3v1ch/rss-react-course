@@ -1,3 +1,4 @@
+import React from 'react';
 import { ClickComponentFunc } from './ErrorButton';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
