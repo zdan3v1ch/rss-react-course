@@ -4,7 +4,6 @@ import { describe, it, expect, vi } from 'vitest';
 import { FlyoutBlock } from './FlyoutBlock';
 import { Provider } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { apiSlice } from '../../redux/slices/rtkQuery/apiSlice';
 import selectedItemsSlice, { selectItem, unselectAll } from '../../redux/slices/selectSlice';
 import { mockCards } from '../../__tests__/mockData';
 
@@ -12,13 +11,12 @@ URL['createObjectURL'] = vi.fn();
 
 describe('Flyout Component', () => {
   const rootReducer = combineReducers({
-    selectedItems: selectedItemsSlice,
-    [apiSlice.reducerPath]: apiSlice.reducer
+    selectedItems: selectedItemsSlice
   });
 
   const store = configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware)
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware()
   });
 
   it('render Flyout component with mock data', () => {

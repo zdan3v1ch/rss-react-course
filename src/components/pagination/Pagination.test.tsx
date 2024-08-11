@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import Pagination from './Pagination';
 
-vi.mock('next/router', () => ({
+vi.mock('next/navigation', () => ({
   useRouter: () => ({
     push: vi.fn()
   })
@@ -12,7 +12,7 @@ vi.mock('next/router', () => ({
 describe('Pagination Component', () => {
   const setup = (page: string, limit: number) => {
     const handleOnClose = vi.fn();
-    render(<Pagination currentPage={page} limit={limit} onClose={handleOnClose} />);
+    render(<Pagination currentPage={page} limit={limit} onClose={handleOnClose} searchQuery={''} />);
 
     const nextButton = screen.getByText(/Next/);
     const prevButton = screen.getByText(/Previous/);

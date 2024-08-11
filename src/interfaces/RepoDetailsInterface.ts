@@ -1,5 +1,6 @@
+import { IResponse } from "./MainPageInterface";
+
 export interface IRepoDetailsProps {
   onClose: () => void;
-  repoId: string;
-  currentPage: string;
+  data: IResponse;
 }

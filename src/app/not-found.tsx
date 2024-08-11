@@ -1,5 +1,5 @@
 import ErrorPage from '../pagesOnApp/errorPage/ErrorPage';
 
-export default function CustomErrorPage() {
+export default function NotFound() {
   return <ErrorPage />;
 }

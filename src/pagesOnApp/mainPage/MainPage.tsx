@@ -1,63 +1,57 @@
+'use client';
+
 import { useContext, useEffect, useState } from 'react';
-import { IResponse } from '../../interfaces/MainPageInterface';
+import { IData, IResponse } from '../../interfaces/MainPageInterface';
 import styles from './MainPage.module.css';
 import { useSearchQuery } from '../../hooks/useSearchQuery';
 import SearchComponent from '../../components/searchComponent/SearchComponent';
 import Pagination from '../../components/pagination/Pagination';
 import { RepoDetails } from '../../components/repoDetails/RepoDetails';
 import { MainBlock } from '../../components/mainBlock/MainBlock';
-import { useGetPeopleQuery } from '../../redux/slices/rtkQuery/apiSlice';
 import { ThemeContext } from '../../contextApi/Context';
 import { FlyoutBlock } from '../../components/flyoutBlock/FlyoutBlock';
-import { useRouter } from 'next/router';
-import { ISSG } from '../../interfaces/ServerSideGener';
+import { useRouter } from 'next/navigation';
 import { getUrlId } from '../../utils/getUrlId';
 
-export default function MainPage({ initialData, initialPage }: ISSG) {
+export default function MainPageFunc({
+  people,
+  page,
+  detail
+}: {
+  people: IData;
+  page: string;
+  detail?: IResponse | null;
+}) {
   const { getSearchQuery } = useSearchQuery();
-  const [dataResult, setDataResult] = useState<IResponse[]>(initialData);
+  const [dataResult, setDataResult] = useState<IResponse[]>([]);
   const [inputData, setInputData] = useState(getSearchQuery());
-  const navigate = useRouter();
-  const { page } = navigate.query;
   const [selectedItem, setSelectedItem] = useState(false);
   const [limit, setLimit] = useState(1);
-  const [clickId, setClickId] = useState('');
+  const [, setClickId] = useState('');
   const { theme } = useContext(ThemeContext);
-  const currentPage = Array.isArray(page) ? page[0] : page || initialPage;
-
-  const { data, isLoading } = useGetPeopleQuery({ searchParam: inputData, page: currentPage });
+  const currentPage = page ? page : '1';
+  const [loading, setLoading] = useState(true);
+  const navigate = useRouter();
 
   useEffect(() => {
-    if (data) {
-      setDataResult(data.results);
-      setLimit(Math.ceil(data.count / 10));
-    }
-  }, [data]);
+    setDataResult(people.results);
+    setLimit(Math.ceil(people.count / 10));
+    setLoading(false);
+  }, [people]);
 
   const handleItemClick = (item: IResponse) => {
     setSelectedItem(true);
     setClickId(item.url);
-    navigate.push(
-      {
-        pathname: '/page/[page]',
-        query: { page: currentPage, details: getUrlId(item.url) }
-      },
-      undefined,
-      { shallow: true }
-    );
+    const peopleID = getUrlId(item.url);
+    const query = `/page/${page}?search=${inputData}&detailId=${peopleID}`;
+
+    navigate.push(query);
   };
 
   const closeDetails = () => {
     if (selectedItem) {
       setSelectedItem(false);
-      navigate.push(
-        {
-          pathname: '/page/[page]',
-          query: { page: currentPage }
-        },
-        undefined,
-        { shallow: true }
-      );
+      navigate.push(`/page/${currentPage}?search=${inputData}`);
     }
   };
 
@@ -66,18 +60,28 @@ export default function MainPage({ initialData, initialPage }: ISSG) {
       <div className={styles.searchBlock}>
         <SearchComponent setInputData={setInputData} currentPage={currentPage} />
       </div>
-      {isLoading && <p className={styles.loadingBlock}>Loading...</p>}
-      {!isLoading && (
+      {loading && <p className={styles.loadingBlock}>Loading...</p>}
+
+      {!loading && (
         <MainBlock
           dataResult={dataResult}
-          loading={isLoading}
+          loading={loading}
           onItemClick={handleItemClick}
           selectedItem={selectedItem}
           onCloseDetails={closeDetails}
-          repoDetailsComponent={<RepoDetails onClose={closeDetails} repoId={clickId} currentPage={currentPage} />}
+          repoDetailsComponent={
+            detail ? (
+              <RepoDetails data={detail} onClose={closeDetails} />
+            ) : (
+              <p className={styles.loadingBlock}>Loading...</p>
+            )
+          }
         />
       )}
-      {!isLoading && <Pagination currentPage={currentPage} limit={limit} onClose={closeDetails} />}
+
+      {!loading && (
+        <Pagination currentPage={currentPage} limit={limit} onClose={closeDetails} searchQuery={inputData} />
+      )}
       <FlyoutBlock />
     </div>
   );

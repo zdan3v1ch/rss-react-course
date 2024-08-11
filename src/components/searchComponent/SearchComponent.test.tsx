@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import SearchComponent from './SearchComponent';
 import { ThemeContext } from '../../contextApi/Context';
 
-vi.mock('next/router', () => ({
+vi.mock('next/navigation', () => ({
   useRouter: () => ({
     push: vi.fn()
   })

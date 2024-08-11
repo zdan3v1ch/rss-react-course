@@ -1,3 +1,5 @@
+import { IData, IResponse } from "../interfaces/MainPageInterface";
+
 export const mockCards = [
   {
     name: "R2-D2",
@@ -27,3 +29,29 @@ export const mockCards = [
     url: "https://swapi.dev/api/people/3/"
   },
 ];
+
+export const mockResponse: IData = {
+  count: 1,
+  results: [
+  {
+    name: "R2-D2",
+    height: "96",
+    mass: "32",
+    skin_color: "white, blue",
+    eye_color: "red",
+    birth_year: "33BBY",
+    gender: "n/a",
+    url: "https://swapi.dev/api/people/3/"
+  },
+],}
+
+export const mockData: IResponse = {
+  name: 'Luke Skywalker',
+  eye_color: 'blue',
+  gender: 'male',
+  height: '172',
+  skin_color: 'fair',
+  mass: '',
+  birth_year: '',
+  url: ''
+};
