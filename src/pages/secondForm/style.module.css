@@ -1,8 +1,28 @@
 .form {
-  /* display: flex; */
-  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: rgb(212, 240, 240);
+  border: 1px solid rgb(40, 96, 136);
+  border-radius: 15px;
+  padding: 15px;
 }
 .error {
   color: red;
-  font-size: 14px;
+  font-size: 10px;
+  position: absolute;
+  left: 22%;
+}
+
+p {
+  margin: 0;
+}
+
+.input {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+label {
+  /* margin-right: 10px; */
 }

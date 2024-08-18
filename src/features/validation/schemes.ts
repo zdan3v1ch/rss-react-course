@@ -67,7 +67,6 @@ export const schemaUncontrolled = yup.object({
   })
   .test('fileSize', 'File is more than 300kB', (value) => {
     if (value instanceof File) {
-      console.log(value)
       return value.size <= MAX_FILE_SIZE;
     }
     return false;
