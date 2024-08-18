@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import style from '../secondForm/style.module.css';
 import { RootState } from '../../features/redux/store';
@@ -7,7 +7,7 @@ import { useUncontrolledForm } from '../../hooks/useUncontrolledForm';
 const FirstForm = () => {
   const countries = useSelector((state: RootState) => state.countries.countries);
 
-  const [disabled, setDisabled] = useState(false)
+  const [disabled, setDisabled] = useState(false);
   const {
     nameRef,
     ageRef,
@@ -20,12 +20,11 @@ const FirstForm = () => {
     tAndCRef,
     countryRef,
     pictureRef
-  } = useUncontrolledForm(setDisabled)
-
+  } = useUncontrolledForm(setDisabled);
 
   const handleChange = () => {
-    setDisabled(false)
-  }
+    setDisabled(false);
+  };
 
   return (
     <div>
@@ -85,7 +84,9 @@ const FirstForm = () => {
           <p className={style.error}>{errors.country}</p>
         </div>
         <div>
-          <button type="submit" disabled={disabled}>submit</button>
+          <button type="submit" disabled={disabled}>
+            submit
+          </button>
         </div>
       </form>
     </div>
