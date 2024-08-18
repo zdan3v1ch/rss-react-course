@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IFormData } from '../../../interfaces/formDataInterface';
 
 const initialState: {
-  forms: string[]
+  forms: IFormData[]
 } = {
   forms: []
 };
@@ -9,7 +10,7 @@ const formDataSlice = createSlice({
   name: 'formsData',
   initialState,
   reducers: {
-    addFormData(state, action: PayloadAction<string>) {
+    addFormData(state, action: PayloadAction<IFormData>) {
       state.forms.push(action.payload);
     }
   }

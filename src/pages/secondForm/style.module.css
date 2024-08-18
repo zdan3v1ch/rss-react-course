@@ -1,0 +1,8 @@
+.form {
+  /* display: flex; */
+  /* background-color: red; */
+}
+.error {
+  color: red;
+  font-size: 14px;
+}
